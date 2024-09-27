@@ -1,0 +1,23 @@
+ syntax = "proto3";
+
+ package types;
+
+ message Keyword{
+    string Field = 1;   //看在哪个字段，标题还是正文
+    string Word = 2;
+ }
+
+ message Document{
+    string Id = 1;          //业务使用的唯一Id，索引上此Id不会重复
+    uint64 IntId = 2;           //倒排索引上使用的文档id(业务侧不用管这个字段)
+    uint64 BitsFeature = 3; //每个bit都表示某种特征的取值
+    repeated Keyword Keywords = 4;  //倒排索引的key
+    bytes Bytes = 5;                //业务实体序列化之后的结果
+ }
+
+ //proto文件来预先定义的消息格式。数据包是按照proto文件所定义的消息格式完成二进制码流的编码和解码。
+ //简单地说，就是一个消息的协议文件
+
+ // protoc --gogofaster_out=./types --proto_path=./types doc.proto
+
+ // 会给message生成很多方法
